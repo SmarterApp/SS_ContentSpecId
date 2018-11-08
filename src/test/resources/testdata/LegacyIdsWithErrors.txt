@@ -1,0 +1,36 @@
+3 SBAC-MA-v5:1|NBT|E-2|m|2.NBT.5
+   Incorrect emphasis in parsed ID. Found 'm', expected 'a/s'.
+3 SBAC-MA-v5:1|NBT|E-2|m|2.NBT.7
+   Incorrect emphasis in parsed ID. Found 'm', expected 'a/s'.
+3 SBAC-MA-v5:1|OA|A-2|m|2.OA.1
+   Incorrect emphasis in parsed ID. Found 'm', expected 'a/s'.
+3 SBAC-MA-v5:1|OA|A-2|m|2.OA.A
+   Incorrect emphasis in parsed ID. Found 'm', expected 'a/s'.
+3 SBAC-MA-v5:1|OA|B-2|m|2.OA.2
+   Incorrect emphasis in parsed ID. Found 'm', expected 'a/s'.
+3 SBAC-MA-v6:UDMAV6|UD|UD|UD
+   Claim must be integer in range 1-4. Found 'UDMAV6'. | Incorrect TargetSet in parsed ID. Found 'UD', expected 'NA'.
+4 SBAC-MA-v5:1|OA|B-2|m|2.OA.B
+   Incorrect emphasis in parsed ID. Found 'm', expected 'a/s'.
+4 SBAC-MA-v6:UDMAV6|UD|UD|UD
+   Claim must be integer in range 1-4. Found 'UDMAV6'. | Incorrect TargetSet in parsed ID. Found 'UD', expected 'NA'.
+5 SBAC-MA-v6:UDMAV6|UD|UD|UD
+   Claim must be integer in range 1-4. Found 'UDMAV6'. | Incorrect TargetSet in parsed ID. Found 'UD', expected 'NA'.
+6 SBAC-MA-v6:UDMAV6|UD|UD|UD
+   Claim must be integer in range 1-4. Found 'UDMAV6'. | Incorrect TargetSet in parsed ID. Found 'UD', expected 'NA'.
+8 SBAC-MA-v6:UDMAV6|UD|UD|UD
+   Claim must be integer in range 1-4. Found 'UDMAV6'. | Incorrect TargetSet in parsed ID. Found 'UD', expected 'NA'.
+11 SBAC-MA-v5:1|G-SRT
+   Target must not be empty.
+11 SBAC-MA-v6:1|S|TS10|C
+   Incorrect Content Category in parsed ID. Found 'S', expected 'P'.
+11 SBAC-MA-v6:1|P|TS02|F
+   Incorrect Content Category in parsed ID. Found 'P', expected 'S'.
+11 SBAC-MA-v6:1|P|TS03|G
+   Incorrect Content Category in parsed ID. Found 'P', expected 'S'.
+11 SBAC-MA-v6:1|S|TS07|O
+   Incorrect Content Category in parsed ID. Found 'S', expected 'P'.
+11 SBAC-MA-v6:1|S|TS08|P
+   Incorrect Content Category in parsed ID. Found 'S', expected 'P'.
+11 SBAC-MA-v6:UDMAV6|UD|UD|UD
+   Claim must be integer in range 1-4. Found 'UDMAV6'. | Incorrect TargetSet in parsed ID. Found 'UD', expected 'NA'.
