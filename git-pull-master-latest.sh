@@ -2,6 +2,6 @@
 
 git checkout master
 
-git pull
+git pull origin master
 
 git checkout develop
