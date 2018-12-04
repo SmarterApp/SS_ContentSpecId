@@ -8,7 +8,6 @@ Java Library to handle conversion of content spec ids between enhanced and legac
 ## Technologies
 
 * Java 8
-* Project Lombok 
 * Gradle
 * JGitflow
 
@@ -172,6 +171,108 @@ grade = ContentSpecGrade.fromString("11");
 ContentSpecClaim and DomainCode types can also be built from strings, but these are more useful internally to the 
 library and may not have any practical use to outside callers. 
 
-## Command Line API
-This is a placeholder section for a planned enhancement to the library
-to provide a command line API to expedite QA and acceptance testing.
+## Command Line Interface (CLI)
+The library jar can also be executed to create a command line interface for testing the conversion process. 
+To execute it on a single Content Spec ID, the usage is:
+
+```java -jar content-spec-id-<version>.jar <content-spec-id-string>```
+
+"<version>" should be replaced to match the jar file you are using. However, if you only have a single version, you
+can use a wildcard "*" to stand in for the version. If the input ID is in legacy format, it will be converted
+to enhanced format and output. If the ID is in enhanced format, it will be converted to legacy format, or in the
+case of Math IDs, all three valid legacy formats.
+
+### CLI Examples
+
+Convert an enhanced ELA ID to legacy. (Here, "> " represents a terminal command prompt, not part of the command
+itself. The following line is the output from the CLI tool.)
+```
+> java -jar content-spec-id-*.jar E.G3.C1RL.T3.L.3.4d
+SBAC-ELA-v1:1-LT|3-3|L.3.4d
+```
+
+Convert an enhanced Math ID to all legacy formats:
+```
+> java -jar content-spec-id-*.jar M.GHS.C1F.TL.HSF.IF.B.4
+SBAC-MA-v4:1|F|L-11|m|HSF.IF.B.4, SBAC-MA-v5:1|F|L-11|m|HSF.IF.B.4, SBAC-MA-v6:1|P|TS06|L-11
+```
+
+Convert a legacy ID to enhanced format. (Note: the ID must be quoted, because pipes (|) are significant to the shell.)
+```
+> java -jar content-spec-id-*.jar 'SBAC-ELA-v1:1-IT|11-4|4.RI.3'
+E.G4.C1RI.T11.4.RI.3
+```
+
+Some legacy IDs omit the grade level. For these cases, a default grade level should be supplied:
+```
+> java -jar content-spec-id-*.jar 4 'SBAC-ELA-v1:1-IT|11|4.RI.3'
+E.G4.C1RI.T11.4.RI.3
+```
+
+If the input ID cannot be converted, an error description appears in the output:
+```
+> java -jar content-spec-id-*.jar E.G4.C1XX.T11.4.RI.3
+Validation Exception: Incorrect domain set. Found 'XX', expected 'RI'.
+```
+
+With the verbose option (-v or --verbose), more detailed output is produced:
+```
+> java -jar content-spec-id-*.jar -v E.G4.C1RI.T11.4.RI.3
+Input: E.G4.C1RI.T11.4.RI.3 (Format: Enhanced) → Output: SBAC-ELA-v1:1-IT|11-4|4.RI.3
+> java -jar content-spec-id-*.jar --verbose E.G4.C1XX.T11.4.RI.3
+Input: E.G4.C1XX.T11.4.RI.3, (Format: Enhanced) → Validation Exception: Incorrect domain set. Found 'XX', expected 'RI'.
+```
+
+### Interactive shell
+When no ID is provided on the command line, the CLI tool starts an interactive shell, in which multiple IDs 
+can be entered, one per line. As each line is entered, the tool performs the conversion and outputs the
+result. The verbose flag also works in this mode. The interactive session can be exited with Ctrl-C.
+
+```
+> java -jar content-spec-id-*.jar --verbose
+E.G3.C1RL.T3.L.3.4d
+Input: E.G3.C1RL.T3.L.3.4d (Format: Enhanced) → Output: SBAC-ELA-v1:1-LT|3-3|L.3.4d
+SBAC-ELA-v1:1-IT|11-4|4.RI.3
+Input: SBAC-ELA-v1:1-IT|11-4|4.RI.3 (Format: Legacy ELA_V1) → Output: E.G4.C1RI.T11.4.RI.3
+4 SBAC-ELA-v1:1-IT|11-4|4.RI.3
+Input: 4 SBAC-ELA-v1:1-IT|11-4|4.RI.3 (Format: Legacy ELA_V1) → Output: E.G4.C1RI.T11.4.RI.3
+^C
+```
+
+### CLI with input files 
+The CLI interactive mode can be combined with a pipe or input redirect to work with input files:
+
+```
+> cat LegacyIdsInUse.txt | java -jar content-*.jar
+E.G3.C1RI.T10.3.L.4
+E.G3.C1RI.T10.3.L.4a
+E.G3.C1RI.T10.3.L.4d
+E.G3.C1RI.T10.3.RI.4
+...
+```
+
+Equivalently:
+```
+> java -jar content-spec-id-*.jar < LegacyIdsInUse.txt
+E.G3.C1RI.T10.3.L.4
+E.G3.C1RI.T10.3.L.4a
+E.G3.C1RI.T10.3.L.4d
+E.G3.C1RI.T10.3.RI.4
+...
+```
+
+The exact syntax of these commands may depend on your shell, e.g., bash vs. Windows command language.
+
+### Print usage information for CLI
+The -h, --help, or --usage switch prints usage information. It cannot be combined with other command parameters. 
+```
+> java -jar content-spec-id-*.jar --help
+USAGE:
+java -jar content-spec-id-0.0.4.jar -h|--help|--usage : prints this usage information
+java -jar content-spec-id-0.0.4.jar [-v|--verbose] [default-grade] content-spec-id : converts given content spec id and output to stdout
+java -jar content-spec-id-0.0.4.jar [-v|--verbose] : reads from stdin and converts content spec id on each line to stdout. Ctrl-C to quit.
+java -jar content-spec-id-0.0.4.jar [-v|--verbose] < /path/to/inputfile: reads from input file and converts content spec id on each line to stdout.
+
+Note: when a legacy ID is provided directly from the command line, it must be surrounded by quotes (single or double), because the pipe character (|) is significant to the shell.
+```
+ 
